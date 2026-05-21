@@ -2,10 +2,12 @@ const express = require("express")
 const router = express.Router()
 
 const search_route = require("./src/routes/search-route")
-router.use("/search",search_route)
+app.use("/search", search_route)
 
-router.get("/data", (req, res) => {
-    res.json({ data: 123 })
-})
+const detail_route = require("./src/routes/detail.route")
+app.use("/detail", detail_route)
+
+const meta_route = require("./src/routes/meta-route")
+app.use("/meta", meta_route)
 
 module.exports = router
