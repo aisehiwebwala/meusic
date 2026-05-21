@@ -7,6 +7,6 @@ app.use("/api", api)
 
 const distPath = path.join(__dirname, "../FE/dist")
 app.use(express.static(distPath))
-app.get("*", (req, res) => res.sendFile(path.join(distPath, "index.html")))
+app.get("/{*any}", (req, res) => res.sendFile(path.join(distPath, "index.html")))
 
 module.exports = app
