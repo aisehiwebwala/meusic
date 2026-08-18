@@ -7,6 +7,7 @@ const getSongModel = async (data) => {
         "subtitle": data?.subtitle,
         "perma_url": data?.perma_url,
         "token": (data?.perma_url).split("/").pop(),
+        "albumToken": (data?.more_info?.album_url).split("/").pop(),
         "duration": data?.more_info?.duration,
         "image": data?.image,
         "language": data?.language,
