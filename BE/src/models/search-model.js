@@ -7,10 +7,11 @@ const getSongModel = async (data) => {
         "subtitle": data?.subtitle,
         "perma_url": data?.perma_url,
         "token": (data?.perma_url).split("/").pop(),
+        "duration": data?.more_info?.duration,
         "image": data?.image,
         "language": data?.language,
         "year": data?.year,
-        "type":data?.type,
+        "type": data?.type,
         "album": data?.more_info.album,
         "music": data?.music,
         "downloadURLs": await getDownloadURL(encodeURIComponent(data?.more_info?.encrypted_media_url)),
@@ -28,7 +29,7 @@ const getAlbumModel = (data) => {
         "image": data?.image,
         "language": data?.language,
         "year": data?.year,
-        "type":data?.type,
+        "type": data?.type,
         "artists": data?.more_info?.artistMap?.primary_artists
     }
 }
@@ -40,7 +41,7 @@ const getArtistModel = (data) => {
         "perma_url": data?.perma_url,
         "token": (data?.perma_url).split("/").pop(),
         "image": data?.image,
-        "type":data?.type
+        "type": data?.type
     }
 }
 
