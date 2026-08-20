@@ -1,0 +1,161 @@
+.queue-page {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  max-width: 860px;
+  animation: fade-in var(--base) var(--ease) both;
+}
+
+/* -------------------------------------------------------------------- header */
+.queue-page__head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.queue-page__titles {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.queue-page__eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.queue-page__title {
+  font-size: clamp(24px, 4vw, 34px);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.queue-page__meta {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.queue-page__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.queue-page__actions .pill[data-active='true'] {
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+.queue-page__danger:hover {
+  color: var(--danger);
+  border-color: color-mix(in srgb, var(--danger) 45%, transparent);
+}
+
+/* --------------------------------------------------------------- now playing */
+.queue-page__now {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  background: var(--surface-1);
+}
+
+.queue-page__now-art {
+  width: 76px;
+  height: 76px;
+  flex: none;
+  border-radius: var(--r-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.queue-page__now-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+  min-width: 0;
+}
+
+.queue-page__now-title {
+  font-size: 19px;
+  letter-spacing: -0.01em;
+}
+
+.queue-page__now-sub {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.queue-page__now-btn {
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  flex: none;
+  border-radius: var(--r-full);
+}
+
+/* ---------------------------------------------------------------------- list */
+.queue-page__list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.queue-page__hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+/* Give the page rows a little more presence than the drawer's. */
+.queue-page__list .queue-row {
+  --queue-row-h: 62px;
+  padding-inline: 6px;
+}
+
+.queue-page__list .queue-row__art {
+  width: 46px;
+  height: 46px;
+}
+
+.queue-page__list .queue-row__title {
+  font-size: 14.5px;
+}
+
+.queue-page__list .queue-row__sub {
+  font-size: 12px;
+}
+
+@media (max-width: 640px) {
+  .queue-page__now {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .queue-page__now-art {
+    width: 62px;
+    height: 62px;
+  }
+
+  .queue-page__now-title {
+    font-size: 17px;
+  }
+
+  .queue-page__hint {
+    display: none;
+  }
+}

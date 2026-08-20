@@ -1,0 +1,172 @@
+/* ==========================================================================
+   Reorderable queue rows — shared by the queue drawer and the /queue page.
+   ========================================================================== */
+
+.queue__list {
+  position: relative;
+}
+
+.queue-row {
+  --queue-row-h: 58px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: var(--queue-row-h);
+  padding: 0 4px 0 2px;
+  border-radius: var(--r-md);
+  background: transparent;
+  transition:
+    background var(--fast) var(--ease),
+    box-shadow var(--fast) var(--ease);
+}
+
+.queue-row:hover {
+  background: var(--surface-hover);
+}
+
+.queue-row[data-current='true'] {
+  background: var(--surface-2);
+}
+
+.queue-row[data-current='true'] .queue-row__title {
+  color: var(--accent);
+}
+
+/* Rows animate into the drop slot only while a drag is live; after release the
+   list re-renders in its new order and must not animate again. */
+.queue__list[data-dragging='true'] .queue-row {
+  transition:
+    transform 180ms var(--ease),
+    background var(--fast) var(--ease);
+}
+
+.queue-row[data-dragged='true'] {
+  position: fixed;
+  z-index: 130;
+  background: var(--surface-3);
+  box-shadow: var(--shadow-lg);
+  transform: scale(1.015);
+  cursor: grabbing;
+  pointer-events: none;
+}
+
+.queue-row__spacer {
+  border-radius: var(--r-md);
+  border: 1px dashed var(--border-strong);
+  background: rgba(255, 255, 255, 0.015);
+}
+
+/* ------------------------------------------------------------------- grip */
+.queue-row__grip {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 100%;
+  flex: none;
+  color: var(--text-dim);
+  cursor: grab;
+  touch-action: none; /* Let the pointer drag win over list scrolling. */
+  transition:
+    color var(--fast) var(--ease),
+    opacity var(--fast) var(--ease);
+}
+
+.queue-row__grip:active {
+  cursor: grabbing;
+}
+
+.queue-row:hover .queue-row__grip {
+  color: var(--text-muted);
+}
+
+@media (hover: hover) {
+  .queue-row__grip {
+    opacity: 0.45;
+  }
+
+  .queue-row:hover .queue-row__grip,
+  .queue-row__grip:focus-visible {
+    opacity: 1;
+  }
+}
+
+/* ------------------------------------------------------------------- main */
+.queue-row__main {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  text-align: left;
+}
+
+.queue-row__art {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border-radius: var(--r-sm);
+  overflow: hidden;
+}
+
+.queue-row__now {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(4, 6, 9, 0.66);
+}
+
+.queue-row__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.queue-row__title {
+  font-size: 13.5px;
+  font-weight: 550;
+}
+
+.queue-row__sub {
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+.queue-row__time {
+  flex: none;
+  font-size: 11.5px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-dim);
+}
+
+.queue-row__actions {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex: none;
+}
+
+.queue-row__actions .icon-btn,
+.queue-row__actions .menu-trigger {
+  width: 30px;
+  height: 30px;
+}
+
+@media (hover: hover) {
+  .queue-row__actions {
+    opacity: 0;
+    transition: opacity var(--fast) var(--ease);
+  }
+
+  .queue-row:hover .queue-row__actions,
+  .queue-row:focus-within .queue-row__actions {
+    opacity: 1;
+  }
+}
+
+.queue-row__remove:hover {
+  color: var(--danger);
+}

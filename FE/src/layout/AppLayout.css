@@ -1,0 +1,75 @@
+/* ==========================================================================
+   Application shell
+   ========================================================================== */
+
+.shell {
+  display: grid;
+  height: 100%;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) auto;
+  grid-template-areas:
+    'main'
+    'dock';
+  background: var(--bg);
+}
+
+/* Only the main region scrolls; the sidebar, queue and dock stay put. */
+.shell__main {
+  grid-area: main;
+  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  scroll-behavior: smooth;
+}
+
+.shell__content {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(28px, 4vw, 44px);
+  padding: 8px var(--gutter) 48px;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.shell__dock {
+  grid-area: dock;
+  display: flex;
+  flex-direction: column;
+  /* Above the queue overlay so the transport is always reachable. */
+  z-index: 85;
+  padding-bottom: env(safe-area-inset-bottom);
+  background: var(--surface-0);
+}
+
+/* ---------------------------------------------------- tablet and desktop */
+@media (min-width: 821px) {
+  .shell {
+    grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
+    grid-template-areas:
+      'sidebar main'
+      'dock dock';
+  }
+}
+
+/* Wide: the queue becomes a third column that animates open. */
+@media (min-width: 1100px) {
+  .shell {
+    grid-template-columns: var(--sidebar-w) minmax(0, 1fr) 0px;
+    grid-template-areas:
+      'sidebar main queue'
+      'dock dock dock';
+    transition: grid-template-columns var(--slow) var(--ease);
+  }
+
+  .shell[data-queue-open='true'] {
+    grid-template-columns: var(--sidebar-w) minmax(0, 1fr) var(--queue-w);
+  }
+}
+
+@media (min-width: 1500px) {
+  :root {
+    --sidebar-w: 256px;
+    --queue-w: 400px;
+  }
+}

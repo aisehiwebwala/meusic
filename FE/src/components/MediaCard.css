@@ -1,0 +1,186 @@
+/* ==========================================================================
+   Media card — one shell for songs, albums and artists.
+   ========================================================================== */
+
+.media-card {
+  position: relative;
+  border-radius: var(--r-lg);
+  transition:
+    background var(--base) var(--ease),
+    transform var(--base) var(--ease);
+}
+
+.media-card:hover {
+  background: var(--surface-1);
+}
+
+/* A link for albums/artists, a plain click target for songs. */
+.media-card__link {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  padding: 10px;
+  border-radius: var(--r-lg);
+  cursor: pointer;
+}
+
+.media-card__art {
+  position: relative;
+  border-radius: var(--r-md);
+}
+
+.media-card[data-round='true'] .media-card__art {
+  border-radius: var(--r-full);
+}
+
+/* Lift the artwork, not the whole card — keeps the text baseline steady. */
+.media-card__art .artwork {
+  box-shadow: var(--shadow-md);
+  transition:
+    transform var(--slow) var(--ease),
+    box-shadow var(--slow) var(--ease);
+}
+
+.media-card:hover .media-card__art .artwork {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* -------------------------------------------------------------- play button */
+.media-card__play {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-full);
+  background: var(--accent);
+  color: var(--accent-ink);
+  box-shadow: 0 10px 26px -8px rgba(0, 0, 0, 0.8);
+  transition:
+    opacity var(--base) var(--ease),
+    transform var(--base) var(--ease),
+    background var(--fast) var(--ease);
+}
+
+/* Reveal on hover only where hovering exists. On touch there is nothing to hover
+   with, and a transparent-but-tappable button over the artwork would fire without
+   ever showing itself. */
+@media (hover: hover) {
+  .media-card__play {
+    opacity: 0;
+    transform: translateY(8px) scale(0.9);
+  }
+
+  .media-card:hover .media-card__play,
+  .media-card:focus-within .media-card__play,
+  .media-card__play[data-visible='true'] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.media-card__play:hover {
+  background: var(--accent-strong);
+  transform: scale(1.07);
+}
+
+.media-card__play:active {
+  transform: scale(0.95);
+}
+
+/* Fetching the album's track list. The button holds its shape — a press that
+   grows or shifts while it waits reads as a second press landing. */
+.media-card__play:disabled {
+  cursor: progress;
+}
+
+.media-card__play:disabled:hover,
+.media-card__play:disabled:active {
+  background: var(--accent);
+  transform: none;
+}
+
+/* The shared spinner is drawn for the page background; on the accent fill it
+   takes the button's own ink instead. */
+.media-card__play .spinner {
+  border-color: color-mix(in srgb, var(--accent-ink) 28%, transparent);
+  border-top-color: var(--accent-ink);
+}
+
+/* ---------------------------------------------------------------- body */
+.media-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.media-card[data-round='true'] .media-card__body {
+  text-align: center;
+}
+
+.media-card__title {
+  font-size: 14px;
+  font-weight: 570;
+  letter-spacing: -0.008em;
+}
+
+.media-card__sub {
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+/* ---------------------------------------------------------------- menu */
+.media-card__menu {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+}
+
+.media-card__menu .menu-trigger {
+  background: rgba(8, 9, 11, 0.7);
+  backdrop-filter: blur(8px);
+  color: var(--text);
+}
+
+.media-card__menu .menu-trigger:hover {
+  background: rgba(8, 9, 11, 0.9);
+}
+
+@media (hover: hover) {
+  .media-card__menu {
+    opacity: 0;
+    transition: opacity var(--fast) var(--ease);
+  }
+
+  .media-card:hover .media-card__menu,
+  .media-card:focus-within .media-card__menu {
+    opacity: 1;
+  }
+}
+
+/* ==========================================================================
+   Grids and shelves
+   ========================================================================== */
+
+/* Responsive card grid — column count follows the available width. */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+  gap: 4px;
+}
+
+@media (min-width: 700px) {
+  .card-grid {
+    grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+  }
+}
+
+@media (min-width: 1400px) {
+  .card-grid {
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  }
+}

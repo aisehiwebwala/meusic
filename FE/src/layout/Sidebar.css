@@ -1,0 +1,96 @@
+.sidebar {
+  grid-area: sidebar;
+  display: none;
+  flex-direction: column;
+  gap: 22px;
+  padding: 20px 14px;
+  border-right: 1px solid var(--border);
+  background: var(--surface-0);
+  overflow-y: auto;
+}
+
+@media (min-width: 821px) {
+  .sidebar {
+    display: flex;
+  }
+}
+
+.sidebar__brand {
+  padding: 0 8px;
+}
+
+/* ------------------------------------------------------------------- nav */
+.sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sidebar__link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: var(--r-md);
+  font-size: 14px;
+  font-weight: 550;
+  color: var(--text-muted);
+  transition:
+    background var(--fast) var(--ease),
+    color var(--fast) var(--ease);
+}
+
+.sidebar__link svg {
+  flex: none;
+  opacity: 0.85;
+}
+
+.sidebar__link:hover {
+  background: var(--surface-1);
+  color: var(--text);
+}
+
+.sidebar__link.active {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+/* Accent rail marks the active route. */
+.sidebar__link.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 3px;
+  height: 17px;
+  transform: translateY(-50%);
+  border-radius: 0 2px 2px 0;
+  background: var(--accent);
+}
+
+.sidebar__link.active svg {
+  color: var(--accent);
+  opacity: 1;
+}
+
+/* --------------------------------------------------------------- section */
+/* Holds the language picker, whose own styles live with the component so the
+   home page can render the same control where the rail is hidden. */
+.sidebar__section {
+  padding: 0 4px;
+}
+
+.sidebar__foot {
+  margin-top: auto;
+  padding: 0 6px;
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--text-dim);
+}
+
+.sidebar__tagline {
+  display: block;
+  font-weight: 600;
+  color: var(--text-muted);
+}

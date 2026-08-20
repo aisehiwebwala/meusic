@@ -2,9 +2,46 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <title>Cadence — Find your rhythm.</title>
+    <meta
+      name="description"
+      content="Find your rhythm. Search songs, albums and artists, pick your streaming quality and build a queue you can reorder on the fly."
+    />
+    <meta name="theme-color" content="#08090b" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="application-name" content="Cadence" />
+    <meta name="apple-mobile-web-app-title" content="Cadence" />
+
+    <!-- Link previews. No absolute URL is hardcoded: the deployment origin is
+         unknown at build time, and og:image is omitted rather than pointed at a
+         file that may not exist. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Cadence" />
+    <meta property="og:title" content="Cadence — Find your rhythm." />
+    <meta
+      property="og:description"
+      content="Search songs, albums and artists, pick your streaming quality and build a queue you can reorder on the fly."
+    />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Cadence — Find your rhythm." />
+    <meta
+      name="twitter:description"
+      content="Search songs, albums and artists, pick your streaming quality and build a queue you can reorder on the fly."
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Artwork and audio both come from JioSaavn's CDN; warm the connection. -->
+    <link rel="preconnect" href="https://c.saavncdn.com" crossorigin />
+    <link rel="preconnect" href="https://aac.saavncdn.com" crossorigin />
   </head>
   <body>
     <div id="root"></div>

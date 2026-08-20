@@ -1,0 +1,132 @@
+/* ==========================================================================
+   Home hero
+   ========================================================================== */
+
+.hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 32px;
+  padding: clamp(24px, 4vw, 44px);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  background:
+    radial-gradient(120% 140% at 0% 0%, rgba(94, 224, 160, 0.09) 0%, transparent 55%),
+    linear-gradient(150deg, var(--surface-2), var(--surface-0) 70%);
+  border: 1px solid var(--border);
+  animation: rise-in var(--slow) var(--ease) both;
+}
+
+.hero__body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  width: fit-content;
+  padding: 5px 12px;
+  border-radius: var(--r-full);
+  background: rgba(94, 224, 160, 0.1);
+  border: 1px solid rgba(94, 224, 160, 0.2);
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.hero__title {
+  font-size: clamp(26px, 5vw, 44px);
+  font-weight: 700;
+  letter-spacing: -0.032em;
+  line-height: 1.08;
+  max-width: 22ch;
+}
+
+.hero__sub {
+  font-size: 14px;
+  color: var(--text-muted);
+  max-width: 46ch;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.hero__actions .pill {
+  height: 44px;
+  padding: 0 18px;
+}
+
+.hero__actions .pill:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* --------------------------------------------------------- cover stack
+   Three covers fanned out; they spread slightly on hover. */
+.hero__art {
+  position: relative;
+  width: 210px;
+  height: 210px;
+  flex: none;
+}
+
+.hero__cover {
+  position: absolute;
+  width: 148px;
+  height: 148px;
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-lg);
+  transition: transform var(--slow) var(--ease);
+}
+
+.hero__cover[data-depth='0'] {
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+}
+
+.hero__cover[data-depth='1'] {
+  right: 34px;
+  bottom: 34px;
+  z-index: 2;
+  transform: rotate(-6deg);
+  opacity: 0.85;
+}
+
+.hero__cover[data-depth='2'] {
+  right: 62px;
+  bottom: 62px;
+  z-index: 1;
+  transform: rotate(-12deg);
+  opacity: 0.6;
+}
+
+.hero:hover .hero__cover[data-depth='1'] {
+  transform: rotate(-9deg) translate(-8px, -8px);
+}
+
+.hero:hover .hero__cover[data-depth='2'] {
+  transform: rotate(-16deg) translate(-16px, -16px);
+}
+
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hero__art {
+    display: none;
+  }
+}

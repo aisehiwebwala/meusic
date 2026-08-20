@@ -1,0 +1,74 @@
+.lang-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+
+.lang-picker__label {
+  font-size: 10.5px;
+  font-weight: 650;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.lang-picker__field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.lang-picker__field select {
+  appearance: none;
+  width: 100%;
+  height: 38px;
+  padding: 0 32px 0 12px;
+  border-radius: var(--r-md);
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  font-size: 13.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background var(--fast) var(--ease),
+    border-color var(--fast) var(--ease);
+}
+
+.lang-picker__field select:hover {
+  background: var(--surface-2);
+  border-color: var(--border-strong);
+}
+
+.lang-picker__field > svg {
+  position: absolute;
+  right: 10px;
+  pointer-events: none;
+  color: var(--text-dim);
+}
+
+/* ------------------------------------------------------------ inline variant */
+/* Used on the home page, which only shows the picker where the sidebar is gone.
+   `display: none` rather than a hidden attribute so it leaves the tab order too:
+   on desktop this control is a duplicate of the one in the rail. */
+.lang-picker[data-variant='inline'] {
+  display: none;
+}
+
+@media (max-width: 820px) {
+  .lang-picker[data-variant='inline'] {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 12px 14px;
+    border-radius: var(--r-lg);
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+  }
+
+  .lang-picker[data-variant='inline'] .lang-picker__field {
+    flex: 0 1 190px;
+  }
+}

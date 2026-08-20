@@ -1,0 +1,61 @@
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Compact is the home link on handsets, and the three bars are only ~14px wide.
+   It takes the same 36px box as the back button it swaps places with, so the
+   header has one target size and this one is actually hittable. */
+.logo[data-compact='true'] {
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex: none;
+}
+
+.logo__mark {
+  display: flex;
+  align-items: flex-end;
+  gap: 2.5px;
+  height: 18px;
+  padding: 0 1px;
+}
+
+.logo__mark i {
+  width: 3px;
+  border-radius: 2px;
+  background: var(--accent);
+  transition: height var(--base) var(--ease);
+}
+
+.logo__mark i:nth-child(1) {
+  height: 55%;
+}
+
+.logo__mark i:nth-child(2) {
+  height: 100%;
+}
+
+.logo__mark i:nth-child(3) {
+  height: 72%;
+}
+
+/* The bars dance on hover — a small, cheap sign of life. */
+.logo:hover .logo__mark i {
+  animation: eq 780ms var(--ease) infinite alternate;
+}
+
+.logo:hover .logo__mark i:nth-child(2) {
+  animation-delay: -300ms;
+}
+
+.logo:hover .logo__mark i:nth-child(3) {
+  animation-delay: -560ms;
+}
+
+.logo__word {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}

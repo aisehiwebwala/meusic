@@ -1,0 +1,175 @@
+.search-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+/* ---------------------------------------------------------------- field */
+.search-bar__field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 48px;
+  padding: 0 6px 0 15px;
+  border-radius: var(--r-full);
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  transition:
+    border-color var(--base) var(--ease),
+    background var(--base) var(--ease),
+    box-shadow var(--base) var(--ease);
+}
+
+.search-bar__field:hover {
+  background: var(--surface-2);
+}
+
+/* The pill itself is the focus indicator. The global accent ring is suppressed
+   on the input below, because it would draw a hard rectangle inside the rounded
+   field — offset outwards, so it clipped the border and read as a glitch. */
+.search-bar__field:focus-within {
+  background: var(--surface-2);
+  border-color: var(--text-dim);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.06);
+}
+
+.search-bar__input:focus-visible {
+  outline: none;
+}
+
+.search-bar__icon {
+  flex: none;
+  color: var(--text-dim);
+  transition: color var(--base) var(--ease);
+}
+
+.search-bar__field:focus-within .search-bar__icon {
+  color: var(--text);
+}
+
+.search-bar__input {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: none;
+  font-size: 14.5px;
+}
+
+.search-bar__input::placeholder {
+  color: var(--text-dim);
+}
+
+/* Drop the browser's own clear affordance — we render our own. */
+.search-bar__input::-webkit-search-cancel-button {
+  appearance: none;
+}
+
+.search-bar__clear {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  flex: none;
+  border-radius: var(--r-full);
+  color: var(--text-dim);
+  transition:
+    background var(--fast) var(--ease),
+    color var(--fast) var(--ease);
+}
+
+.search-bar__clear:hover {
+  background: var(--surface-3);
+  color: var(--text);
+}
+
+.search-bar__submit {
+  flex: none;
+  height: 36px;
+  padding: 0 18px;
+  border-radius: var(--r-full);
+  background: var(--text);
+  color: var(--bg);
+  font-size: 13px;
+  font-weight: 640;
+  transition:
+    transform var(--fast) var(--ease),
+    opacity var(--fast) var(--ease);
+}
+
+.search-bar__submit:hover {
+  transform: scale(1.03);
+}
+
+.search-bar__submit:active {
+  transform: scale(0.97);
+}
+
+/* ------------------------------------------------------------ type tabs */
+.search-bar__types {
+  display: flex;
+  gap: 6px;
+  padding: 3px;
+  border-radius: var(--r-full);
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  width: fit-content;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.search-bar__types::-webkit-scrollbar {
+  display: none;
+}
+
+.search-bar__type {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 32px;
+  padding: 0 15px;
+  border-radius: var(--r-full);
+  font-size: 13px;
+  font-weight: 550;
+  color: var(--text-muted);
+  white-space: nowrap;
+  transition:
+    background var(--base) var(--ease),
+    color var(--base) var(--ease);
+}
+
+.search-bar__type:hover {
+  color: var(--text);
+}
+
+.search-bar__type[data-active='true'] {
+  background: var(--surface-3);
+  color: var(--text);
+  box-shadow: var(--shadow-sm);
+}
+
+.search-bar__type svg {
+  opacity: 0.75;
+}
+
+.search-bar__type[data-active='true'] svg {
+  opacity: 1;
+  color: var(--accent);
+}
+
+@media (max-width: 560px) {
+  .search-bar__submit {
+    padding: 0 14px;
+  }
+
+  .search-bar__type {
+    padding: 0 12px;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .search-bar__types {
+    width: 100%;
+  }
+}

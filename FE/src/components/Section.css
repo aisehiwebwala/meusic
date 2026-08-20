@@ -1,0 +1,43 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: rise-in var(--base) var(--ease) both;
+}
+
+.section__head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  min-width: 0;
+}
+
+.section__titles {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.section__title {
+  font-size: clamp(19px, 2.4vw, 23px);
+}
+
+.section__sub {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.section__action {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+}
+
+/* Lets a horizontal shelf run to the viewport edge while the header stays
+   inside the page gutter. */
+.section[data-bleed='true'] {
+  overflow: hidden;
+}

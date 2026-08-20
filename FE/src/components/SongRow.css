@@ -1,0 +1,299 @@
+/* ==========================================================================
+   Song row — flex based, so optional columns (index / artwork / album) can be
+   dropped without any grid-template bookkeeping.
+   ========================================================================== */
+
+.song-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.song-list__head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 10px 8px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.song-list__head-spacer {
+  width: 44px;
+  flex: none;
+}
+
+.song-list__head-spacer[data-bare='true'] {
+  width: 28px;
+}
+
+.song-list__head-cell--grow {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Reserve the width of the row's overflow-menu button. */
+.song-list__head-time {
+  flex: none;
+  margin-right: 44px;
+}
+
+.song-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 10px;
+  border-radius: var(--r-md);
+  position: relative;
+  /* The whole row is a play target; nested links keep their own cursor. */
+  cursor: pointer;
+  transition: background var(--fast) var(--ease);
+}
+
+.song-row[data-unavailable='true'] {
+  cursor: default;
+}
+
+.song-row:hover,
+.song-row:focus-within {
+  background: var(--surface-hover);
+}
+
+.song-row[data-current='true'] .song-row__title {
+  color: var(--accent);
+}
+
+.song-row[data-unavailable='true'] {
+  opacity: 0.55;
+}
+
+/* ------------------------------------------------------------------ index */
+.song-row__index {
+  width: 22px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-dim);
+}
+
+/* ------------------------------------------------------- artwork + play */
+.song-row__lead {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+.song-row__lead:disabled {
+  cursor: default;
+}
+
+/* Without artwork the lead is just a play target, so it needs no scrim. */
+.song-row__lead[data-bare='true'] {
+  width: 28px;
+  height: 28px;
+}
+
+.song-row__lead[data-bare='true'] .song-row__overlay {
+  background: transparent;
+  color: var(--text-muted);
+}
+
+.song-row:hover .song-row__lead[data-bare='true'] .song-row__overlay {
+  color: var(--text);
+}
+
+/* Nothing to hover with: the bare lead has no artwork behind it, so a hidden
+   overlay leaves a 28px button drawn as blank space (this is the album page's
+   only per-track play control). It stays visible on touch. */
+@media (hover: none) {
+  .song-row__lead[data-bare='true'] .song-row__overlay {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.song-row__art {
+  border-radius: var(--r-sm);
+  width: 44px;
+  height: 44px;
+}
+
+/* Sits on top of the artwork; also acts as the play affordance when the row
+   renders without artwork. */
+.song-row__overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--text);
+  background: rgba(4, 6, 9, 0.62);
+  opacity: 0;
+  transform: scale(0.85);
+  transition:
+    opacity var(--fast) var(--ease),
+    transform var(--base) var(--ease);
+}
+
+.song-row:hover .song-row__overlay,
+.song-row:focus-within .song-row__overlay {
+  opacity: 1;
+  transform: none;
+}
+
+.song-row[data-unavailable='true'] .song-row__overlay {
+  display: none;
+}
+
+/* --------------------------------------------------------------- metadata */
+.song-row__meta {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.song-row__title {
+  font-size: 14.5px;
+  font-weight: 550;
+  color: var(--text);
+  transition: color var(--fast) var(--ease);
+}
+
+.song-row__sub {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.song-row__link {
+  transition: color var(--fast) var(--ease);
+}
+
+.song-row__link:hover {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.song-row__album {
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* ------------------------------------------------------------------- tail */
+.song-row__tail {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+}
+
+.song-row__time {
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-dim);
+}
+
+.song-row__badge {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+  border-radius: var(--r-full);
+  padding: 2px 8px;
+}
+
+/* The overflow menu fades in on hover on pointer devices, but stays visible on
+   touch where there is no hover state to reveal it. */
+@media (hover: hover) {
+  .song-row .menu-trigger {
+    opacity: 0;
+  }
+
+  .song-row:hover .menu-trigger,
+  .song-row:focus-within .menu-trigger,
+  .song-row .menu-trigger[data-active='true'] {
+    opacity: 1;
+  }
+}
+
+/* --------------------------------------------------------- playing bars */
+.playing-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 13px;
+}
+
+.playing-bars i {
+  width: 2.5px;
+  border-radius: 1px;
+  background: var(--accent);
+  animation: eq 900ms var(--ease) infinite alternate;
+}
+
+.playing-bars i:nth-child(1) {
+  height: 60%;
+  animation-delay: -200ms;
+}
+
+.playing-bars i:nth-child(2) {
+  height: 100%;
+  animation-delay: -520ms;
+}
+
+.playing-bars i:nth-child(3) {
+  height: 45%;
+  animation-delay: -80ms;
+}
+
+.playing-bars[data-paused='true'] i {
+  animation-play-state: paused;
+  opacity: 0.6;
+}
+
+@keyframes eq {
+  from {
+    height: 20%;
+  }
+  to {
+    height: 100%;
+  }
+}
+
+/* --------------------------------------------------------------- responsive */
+@media (max-width: 900px) {
+  .song-row__album,
+  .song-list__head .song-row__album {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .song-row {
+    padding: 7px 6px;
+    gap: 10px;
+  }
+
+  .song-list__head {
+    display: none;
+  }
+}

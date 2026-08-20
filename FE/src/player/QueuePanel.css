@@ -1,0 +1,153 @@
+/* ==========================================================================
+   Queue drawer
+   Wide screens: a docked column inside the shell grid.
+   Narrow screens: an overlay sheet with a scrim.
+   ========================================================================== */
+
+.queue {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--surface-0);
+  border-left: 1px solid var(--border);
+}
+
+.queue__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 16px 12px 12px 18px;
+  border-bottom: 1px solid var(--border);
+  flex: none;
+}
+
+.queue__titles {
+  min-width: 0;
+}
+
+.queue__title {
+  font-size: 16px;
+}
+
+.queue__meta {
+  font-size: 12px;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.queue__head-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex: none;
+}
+
+.queue__body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 8px;
+}
+
+.queue__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 11px 18px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--text-dim);
+  flex: none;
+}
+
+.queue__foot-btn {
+  font-size: 12px;
+  font-weight: 550;
+  color: var(--text-muted);
+  transition: color var(--fast) var(--ease);
+}
+
+.queue__foot-btn:hover {
+  color: var(--danger);
+}
+
+/* ------------------------------------------------------------------ scrim */
+.queue-scrim {
+  display: none;
+}
+
+/* ==========================================================================
+   Docked (wide) vs overlay (narrow)
+   ========================================================================== */
+
+/* Docked: the shell grid animates the column width, so the panel itself only
+   needs to slide its content in. */
+@media (min-width: 1100px) {
+  .queue {
+    grid-area: queue;
+    overflow: hidden;
+    /* Closed, the column is 0px wide but its contents would still be tabbable;
+       `visibility` takes them out of the tab order and the a11y tree. It flips
+       to hidden only after the collapse animation, so the slide still reads. */
+    visibility: hidden;
+    transition: visibility var(--slow) var(--ease);
+  }
+
+  .queue[data-open='true'] {
+    visibility: visible;
+  }
+}
+
+/* Overlay: a fixed sheet from the right that stops above the dock — the dock
+   deliberately paints over this panel, so anything under it would be lost. */
+@media (max-width: 1099px) {
+  .queue {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: calc(var(--dock-h) + env(safe-area-inset-bottom));
+    z-index: 80;
+    width: min(400px, 100vw);
+    box-shadow: var(--shadow-lg);
+    transform: translateX(100%);
+    visibility: hidden;
+    transition:
+      transform var(--slow) var(--ease),
+      visibility var(--slow) var(--ease);
+  }
+
+  .queue[data-open='true'] {
+    transform: none;
+    visibility: visible;
+  }
+
+  .queue-scrim {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 79;
+    background: rgba(4, 6, 9, 0.6);
+    backdrop-filter: blur(2px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--base) var(--ease);
+  }
+
+  .queue-scrim[data-open='true'] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+@media (max-width: 520px) {
+  .queue {
+    width: 100vw;
+  }
+
+  .queue__head {
+    padding: 14px 8px 10px 14px;
+  }
+}

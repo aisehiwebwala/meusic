@@ -1,0 +1,77 @@
+.toast-stack {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  /* Clears the whole dock, not just the player bar: on handsets the dock also
+     carries the seek strip and the tab bar, and `--dock-h` is the one token that
+     accounts for all three. */
+  bottom: calc(var(--dock-h) + env(safe-area-inset-bottom) + 16px);
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.toast {
+  pointer-events: auto;
+  max-width: min(88vw, 420px);
+  padding: 10px 18px;
+  border-radius: var(--r-full);
+  background: var(--surface-3);
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--shadow-lg);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 550;
+  text-align: center;
+  animation: toast-in var(--base) var(--ease) both;
+  transition: transform var(--fast) var(--ease);
+}
+
+.toast:hover {
+  transform: translateY(-1px);
+}
+
+/* ----------------------------------------------------- toast with an action */
+.toast--action {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 8px 6px 14px;
+  text-align: left;
+}
+
+.toast__body {
+  min-width: 0;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+}
+
+.toast__action {
+  flex: none;
+  padding: 6px 14px;
+  border-radius: var(--r-full);
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: 12.5px;
+  font-weight: 650;
+  transition: background var(--fast) var(--ease);
+}
+
+.toast__action:hover {
+  background: var(--accent-strong);
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -1,0 +1,108 @@
+/* ------------------------------------------------------------- skeletons */
+.skeleton {
+  display: block;
+  background: linear-gradient(100deg, var(--surface-1) 20%, var(--surface-2) 40%, var(--surface-1) 60%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+
+.skeleton-card {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.skeleton-card__art {
+  aspect-ratio: 1;
+  height: auto !important;
+}
+
+.skeleton-rows {
+  display: flex;
+  flex-direction: column;
+}
+
+.skeleton-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 10px;
+  height: 60px;
+}
+
+.skeleton-row__text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+
+/* --------------------------------------------------------------- spinner */
+.spinner {
+  display: inline-block;
+  border: 2px solid var(--border-strong);
+  border-top-color: var(--accent);
+  border-radius: var(--r-full);
+  animation: spin 620ms linear infinite;
+}
+
+/* ------------------------------------------------- empty / error states */
+.state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 56px 24px;
+  text-align: center;
+  animation: rise-in var(--base) var(--ease) both;
+}
+
+.state--compact {
+  padding: 28px 18px;
+  gap: 10px;
+}
+
+.state__icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r-full);
+  background: var(--surface-2);
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+}
+
+.state__icon--error {
+  color: var(--danger);
+  background: rgba(242, 114, 111, 0.1);
+  border-color: rgba(242, 114, 111, 0.22);
+}
+
+.state__body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: 44ch;
+}
+
+.state__title {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.state__text {
+  font-size: 13.5px;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+/* Wrapper for one or more call-to-action links passed as `action`. */
+.state__actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}

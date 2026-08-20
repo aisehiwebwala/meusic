@@ -1,0 +1,90 @@
+.slider {
+  --slider-h: 4px;
+  --thumb: 12px;
+  /* Resting handle scale. 0 keeps pointer-driven UI calm — the handle appears on
+     hover. Touch-first views (the now-playing sheet) set it to 1, since there is
+     no hover there to reveal a handle and a bare rail reads as a static bar. */
+  --thumb-rest: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 18px;
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
+  touch-action: none; /* Pointer events own the gesture, not the scroller. */
+}
+
+.slider[data-disabled='true'] {
+  cursor: default;
+  opacity: 0.45;
+}
+
+.slider__rail {
+  position: relative;
+  width: 100%;
+  height: var(--slider-h);
+  border-radius: var(--r-full);
+  background: var(--surface-3);
+  transition: height var(--fast) var(--ease);
+}
+
+.slider__fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: var(--r-full);
+  background: var(--text-muted);
+  transition: background var(--base) var(--ease);
+}
+
+/* The handle appears on hover/drag/focus, keeping the resting state calm —
+   unless `--thumb-rest` says it should always be visible. */
+.slider__thumb {
+  position: absolute;
+  top: 50%;
+  width: var(--thumb);
+  height: var(--thumb);
+  margin-left: calc(var(--thumb) / -2);
+  border-radius: var(--r-full);
+  background: var(--text);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+  transform: translateY(-50%) scale(var(--thumb-rest));
+  transition: transform var(--fast) var(--ease);
+}
+
+.slider:hover .slider__rail,
+.slider:focus-visible .slider__rail,
+.slider[data-dragging='true'] .slider__rail {
+  height: 6px;
+}
+
+.slider:hover .slider__fill,
+.slider:focus-visible .slider__fill,
+.slider[data-dragging='true'] .slider__fill {
+  background: var(--accent);
+}
+
+.slider:hover .slider__thumb,
+.slider:focus-visible .slider__thumb,
+.slider[data-dragging='true'] .slider__thumb {
+  transform: translateY(-50%) scale(1);
+}
+
+.slider[data-dragging='true'] .slider__thumb {
+  transform: translateY(-50%) scale(1.15);
+}
+
+.slider[data-disabled='true']:hover .slider__rail {
+  height: var(--slider-h);
+}
+
+/* A disabled slider has nothing to grab, so it never shows a handle — not even
+   where `--thumb-rest` would otherwise keep one parked. */
+.slider[data-disabled='true'] .slider__thumb,
+.slider[data-disabled='true']:hover .slider__thumb {
+  transform: translateY(-50%) scale(0);
+}
+
+.slider[data-disabled='true']:hover .slider__fill {
+  background: var(--text-muted);
+}

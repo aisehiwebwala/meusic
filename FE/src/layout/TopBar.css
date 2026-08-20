@@ -1,0 +1,55 @@
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px var(--gutter);
+  /* Blurred veil so content scrolling underneath stays legible. */
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+  backdrop-filter: blur(18px) saturate(140%);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--base) var(--ease);
+}
+
+/* The divider is a response to content sliding under the bar, so it only appears
+   once the page has actually scrolled. (It used to key off `:has(~
+   .shell__content)`, which is always true — the sibling is always there — so the
+   border was simply permanent.) */
+.shell__main[data-scrolled='true'] .topbar {
+  border-bottom-color: var(--border);
+}
+
+.topbar__history {
+  display: flex;
+  gap: 4px;
+  flex: none;
+}
+
+.topbar__history .icon-btn {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+}
+
+.topbar__history .icon-btn:hover {
+  background: var(--surface-3);
+}
+
+.topbar__back {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  flex: none;
+}
+
+.topbar__search {
+  flex: 1;
+  min-width: 0;
+  max-width: 560px;
+}
+
+@media (min-width: 821px) {
+  .topbar {
+    padding-top: 16px;
+  }
+}

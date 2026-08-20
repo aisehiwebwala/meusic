@@ -1,0 +1,380 @@
+/* ==========================================================================
+   Player bar — three-column transport docked at the bottom of the shell.
+   ========================================================================== */
+
+.player {
+  position: relative;
+  z-index: 60;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 16px;
+  height: var(--player-h);
+  padding: 0 clamp(12px, 2vw, 22px);
+  background: color-mix(in srgb, var(--surface-0) 92%, transparent);
+  backdrop-filter: blur(20px) saturate(140%);
+  border-top: 1px solid var(--border);
+}
+
+.player[data-empty='true'] .player__extras .quality-chip {
+  opacity: 0.6;
+}
+
+/* ------------------------------------------------------------- left: track */
+.player__track {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.player__art {
+  position: relative;
+  width: 54px;
+  height: 54px;
+  flex: none;
+  border-radius: var(--r-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: transform var(--base) var(--ease);
+}
+
+.player__art:hover {
+  transform: scale(1.04);
+}
+
+.player__art-expand {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(4, 6, 9, 0.6);
+  color: var(--text);
+  opacity: 0;
+  transition: opacity var(--fast) var(--ease);
+}
+
+.player__art:hover .player__art-expand,
+.player__art:focus-visible .player__art-expand {
+  opacity: 1;
+}
+
+.player__idle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.player__idle-art {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  flex: none;
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+  color: var(--text-dim);
+}
+
+.player__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.player__title {
+  font-size: 14px;
+  font-weight: 570;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.player__artists {
+  font-size: 12px;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.player__artists[data-error='true'] {
+  color: var(--danger);
+}
+
+.player__sublink:hover {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.player__album-link {
+  width: 32px;
+  height: 32px;
+}
+
+@media (hover: hover) {
+  .player__album-link {
+    opacity: 0;
+  }
+
+  .player__track:hover .player__album-link,
+  .player__album-link:focus-visible {
+    opacity: 1;
+  }
+}
+
+/* --------------------------------------------------------- centre: controls */
+.player__center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.player__buttons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.player__play {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  margin: 0 6px;
+  border-radius: var(--r-full);
+  background: var(--text);
+  color: var(--bg);
+  transition:
+    transform var(--fast) var(--ease),
+    background var(--fast) var(--ease);
+}
+
+.player__play:hover:not(:disabled) {
+  transform: scale(1.07);
+}
+
+.player__play:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.player__play:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.player__spinner {
+  width: 17px;
+  height: 17px;
+  border: 2px solid rgba(0, 0, 0, 0.25);
+  border-top-color: var(--bg);
+  border-radius: var(--r-full);
+  animation: spin 620ms linear infinite;
+}
+
+.player__repeat {
+  position: relative;
+}
+
+.player__repeat-badge {
+  position: absolute;
+  right: 3px;
+  bottom: 2px;
+  font-size: 8.5px;
+  font-weight: 800;
+  line-height: 1;
+  padding: 1px 2.5px;
+  border-radius: 3px;
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.player__timeline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 560px;
+}
+
+.player__time {
+  flex: none;
+  min-width: 36px;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+.player__error {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  color: var(--danger);
+}
+
+/* ---------------------------------------------------------- right: extras */
+.player__extras {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  min-width: 0;
+}
+
+.player__volume {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 128px;
+}
+
+.player__volume-slider {
+  --thumb: 11px;
+}
+
+.player__queue-count {
+  position: absolute;
+  transform: translate(13px, -11px);
+  min-width: 15px;
+  padding: 0 4px;
+  border-radius: var(--r-full);
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: 9.5px;
+  font-weight: 800;
+  line-height: 15px;
+  text-align: center;
+  pointer-events: none;
+}
+
+/* The queue button needs a positioning context for its badge. */
+.player__extras > .icon-btn {
+  position: relative;
+}
+
+/* --------------------------------------------------------- mobile seek strip
+   A real slider sitting flush above the bar, so the progress line you can see is
+   also the one you can drag. It owns the dock's top border; `.player` drops its
+   own so the two read as a single surface. */
+.player__seek {
+  position: relative;
+  z-index: 61;
+  display: flex;
+  align-items: center;
+  height: var(--seek-h);
+  padding: 0 10px;
+  background: color-mix(in srgb, var(--surface-0) 92%, transparent);
+  backdrop-filter: blur(20px) saturate(140%);
+  border-top: 1px solid var(--border);
+}
+
+/* Fill and handle rest visible: on touch there is no hover to reveal them, and a
+   progress line rendered in --text-muted reads as decoration. */
+.player__seek-slider {
+  --slider-h: 4px;
+  --thumb: 12px;
+  --thumb-rest: 1;
+  height: var(--seek-h);
+}
+
+.player__seek-slider .slider__fill {
+  background: var(--accent);
+}
+
+/* ------------------------------------------------------------- responsive */
+@media (max-width: 1080px) {
+  .player__volume {
+    width: 96px;
+  }
+}
+
+/* Mobile: a single row of track / transport / quality. Everything the row can't
+   hold — album and artist links, volume, shuffle, repeat, the track menu — lives
+   one tap away in the now-playing sheet, which the whole left block opens. */
+@media (max-width: 820px) {
+  .player {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: 6px;
+    padding: 0 8px 0 10px;
+    border-top: none;
+  }
+
+  .player__center {
+    flex-direction: row;
+    gap: 0;
+  }
+
+  .player__art,
+  .player__idle-art {
+    width: 44px;
+    height: 44px;
+  }
+
+  .player__play {
+    width: 38px;
+    height: 38px;
+    margin: 0 2px;
+  }
+
+  /* The peek button's subline carries the message instead. */
+  .player__error {
+    display: none;
+  }
+}
+
+/* Art plus two lines of text as one tap target. */
+.player__peek {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  text-align: left;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.player__peek:active {
+  opacity: 0.7;
+}
+
+@media (max-width: 420px) {
+  /* Reclaim width for the title: the row is the only thing between the artwork
+     and the quality chip at this size. */
+  .player__buttons .icon-btn {
+    width: 32px;
+    height: 32px;
+    position: relative;
+  }
+
+  /* The glyphs shrink to fit; the targets don't have to. Each button grows
+     vertically into the bar's own padding, which no neighbour occupies — 32px is
+     under the comfortable minimum, and this is the transport people reach for
+     while walking. Horizontally they stay put: only 4px separates them, and
+     overlapping targets trade a small target for a wrong one. */
+  .player__buttons .icon-btn::after {
+    content: '';
+    position: absolute;
+    inset: -6px 0;
+  }
+
+  .player__play {
+    width: 36px;
+    height: 36px;
+    margin: 0;
+  }
+
+  .player__extras .quality-chip {
+    height: 26px;
+    padding: 0 7px;
+  }
+
+  .player__extras .quality-chip__unit {
+    display: none;
+  }
+}

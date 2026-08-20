@@ -1,0 +1,102 @@
+/* Compact chip in the player bar — always shows the active bitrate. */
+.quality-chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 3px;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-1);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  transition:
+    background var(--fast) var(--ease),
+    color var(--fast) var(--ease),
+    border-color var(--fast) var(--ease);
+}
+
+.quality-chip:hover,
+.quality-chip[aria-expanded='true'] {
+  background: var(--surface-3);
+  border-color: var(--border-strong);
+  color: var(--text);
+}
+
+.quality-chip__rate {
+  font-size: 12.5px;
+  font-weight: 650;
+  color: var(--accent);
+}
+
+.quality-chip__unit {
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Segmented control used in the expanded now-playing sheet. */
+.quality-inline {
+  display: flex;
+  gap: 5px;
+  padding: 4px;
+  border-radius: var(--r-full);
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+}
+
+.quality-inline__option {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  flex: 1;
+  justify-content: center;
+  height: 34px;
+  padding: 0 12px;
+  border-radius: var(--r-full);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  transition:
+    background var(--base) var(--ease),
+    color var(--base) var(--ease);
+}
+
+.quality-inline__option:hover:not(:disabled) {
+  color: var(--text);
+}
+
+.quality-inline__option[data-active='true'] {
+  background: var(--surface-3);
+  color: var(--text);
+  box-shadow: var(--shadow-sm);
+}
+
+.quality-inline__option:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.quality-inline__rate {
+  font-size: 14px;
+  font-weight: 620;
+}
+
+.quality-inline__option[data-active='true'] .quality-inline__rate {
+  color: var(--accent);
+}
+
+.quality-inline__unit {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Handsets: the segments span the panel in a stacked row, so they can give back
+   horizontal padding without losing any tap area. */
+@media (max-width: 480px) {
+  .quality-inline__option {
+    padding: 0 9px;
+  }
+}
