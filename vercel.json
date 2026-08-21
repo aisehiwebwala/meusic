@@ -18,7 +18,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "FE/$1"
+      "dest": "FE/dist/index.html"
     }
   ]
 }
